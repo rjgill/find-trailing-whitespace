@@ -4,8 +4,11 @@ set -e
 
 tw_lines=""  # Lines containing trailing whitespaces.
 
+# Specify directory to exclude
+excluded_dir='deps/'
+
 # TODO (harupy): Check only changed files.
-for file in $(git ls-files | sed -e 's/^/.\//')
+for file in $(git ls-files | grep -v '$excluded_dir' sed -e 's/^/.\//')
 do
   lines=$(egrep -rnIH " +$" $file | cut -f-2 -d ":")
   if [ ! -z "$lines" ]; then
